@@ -8,6 +8,7 @@ passport.deserializeUser(User.deserializeUser());
 passport.use(new LocalStrategy(User.authenticate()));
 
 const registerUser = async (req, res) => {
+  // #swagger.tags = ['Auth']
   User.register(
     new User({ email: req.body.email, username: req.body.username }),
     req.body.password,
@@ -31,6 +32,7 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
+  // #swagger.tags = ['Auth']
   if (!req.body.username) {
     res.json({ success: false, message: "Username was not given" });
   } else if (!req.body.password) {

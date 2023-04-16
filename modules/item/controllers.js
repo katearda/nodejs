@@ -3,11 +3,13 @@ const Item = require("../../models/item");
 const { isValidId } = require("../../utils/validator");
 
 const listItem = async (req, res) => {
+  // #swagger.tags = ['Item']
   const items = await Item.find({}).sort({ createdAt: -1 });
   res.status(200).json(items);
 };
 
 const getItem = async (req, res) => {
+  // #swagger.tags = ['Item']
   const { id } = req.params;
 
   if (!isValidId(id)) {
@@ -23,6 +25,7 @@ const getItem = async (req, res) => {
 };
 
 const createItem = async (req, res) => {
+  // #swagger.tags = ['Item']
   const { label, quantity } = req.body;
 
   try {
@@ -34,6 +37,7 @@ const createItem = async (req, res) => {
 };
 
 const deleteItem = async (req, res) => {
+  // #swagger.tags = ['Item']
   const { id } = req.params;
 
   if (!isValidId(id)) {
@@ -49,6 +53,7 @@ const deleteItem = async (req, res) => {
 };
 
 const updateItem = async (req, res) => {
+  // #swagger.tags = ['Item']
   const { id } = req.params;
 
   if (!isValidId(id)) {

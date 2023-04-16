@@ -2,9 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger_output.json");
 
 const db = require("./config/db");
-const router = require("./modules");
+const itemRouter = require("./modules/item/routes");
+const authRouter = require("./modules/auth/routes");
 
 // Express App
 const app = express();
@@ -26,8 +29,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routers
-app.use("/api/items", router.itemRouter);
-app.use("/auth", router.authRouter);
+app.use("/api/items", itemRouter);
+app.use("/auth", authRouter);
+
+// Documentation
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}!`);

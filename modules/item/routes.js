@@ -1,16 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
+const { isAuthenticated } = require("../../utils/permissions");
 const controllers = require("./controllers");
 
-router.get("/", controllers.listItem);
+router.get("/", isAuthenticated, controllers.listItem);
 
-router.get("/:id", controllers.getItem);
+router.get("/:id", isAuthenticated, controllers.getItem);
 
-router.post("/", controllers.createItem);
+router.post("/", isAuthenticated, controllers.createItem);
 
-router.delete("/:id", controllers.deleteItem);
+router.delete("/:id", isAuthenticated, controllers.deleteItem);
 
-router.patch("/:id", controllers.updateItem);
+router.patch("/:id", isAuthenticated, controllers.updateItem);
 
 module.exports = router;

@@ -32,8 +32,10 @@ app.use(passport.session());
 app.use("/api/items", itemRouter);
 app.use("/auth", authRouter);
 
-// Documentation
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+if (process.env.DEBUG) {
+  // Documentation
+  app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+}
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}!`);

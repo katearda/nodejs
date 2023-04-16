@@ -1,17 +1,16 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const workoutController  = require('./controller')
+const controllers = require("./controllers");
 
+router.get("/", controllers.listItem);
 
-router.get('/', workoutController.listItem )
+router.get("/:id", controllers.getItem);
 
-router.get('/:id', workoutController.getItem)
+router.post("/", controllers.createItem);
 
-router.post('/', workoutController.createItem )
+router.delete("/:id", controllers.deleteItem);
 
-router.delete('/:id', workoutController.deleteItem)
+router.patch("/:id", controllers.updateItem);
 
-router.patch('/:id', workoutController.updateItem)
-
-module.exports = router
+module.exports = router;

@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 function isValidId(id) {
-    return mongoose.Types.ObjectId.isValid(id)
+  return mongoose.Types.ObjectId.isValid(id);
 }
 
 module.exports = {
-    isValidId
-}
+  isValidId,
+};

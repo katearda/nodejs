@@ -1,30 +1,34 @@
-require('dotenv').config()
-const express = require('express')
+require("dotenv").config();
+const express = require("express");
+const passport = require("passport");
+const session = require("express-session");
 
-const router = require('./modules')
+const db = require("./config/db");
+const router = require("./modules");
 
 // Express App
-const app = express()
-const mongoose = require('mongoose')
+const app = express();
 
 // Connect to DB
-mongoose.connect(process.env.DB_URI)
-.then(() => {
-    app.listen(process.env.PORT, () => {
-        console.log(`Listening on port ${process.env.PORT}!`)
-    })
-})
-.catch((e) => {
-    console.log(e)
-})
+db.connect();
 
 // Middlewares
 // To be able to access request body
-app.use(express.json())
+app.use(express.json());
 app.use((req, res, next) => {
-    console.log(req.path, req.method)
-    next()
-})
+  console.log(req.path, req.method);
+  next();
+});
+app.use(session({ secret: process.env.SESSION_SECRET }));
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routers
-app.use('/api/items', router.itemRouter)
+app.use("/api/items", router.itemRouter);
+app.use("/auth", router.authRouter);
+
+app.listen(process.env.PORT, () => {
+  console.log(`Listening on port ${process.env.PORT}!`);
+});
